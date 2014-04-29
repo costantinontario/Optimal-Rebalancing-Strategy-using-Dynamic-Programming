@@ -1,3 +1,6 @@
+# 
+
+
 # Import Required Libraries
 import pandas as pd
 import numpy as np
@@ -40,6 +43,10 @@ wA=0.0
 detail = 0.0005
 # Define Amount Invested in Period 0
 initial_amount_invested = 1000000000
+# Define Trading Costs of Asset A (in basis points)
+CA = 60
+# Define Trading Costs of Asset B (in basis points)
+CB = 40
 
 # Create DataFrame
 index = np.arange(1 / detail) 
@@ -118,11 +125,11 @@ print 'Cost of not rebalancing to Optimal Portfolio Weight: ' + str(np.abs(np.su
 print ' '
 
 # Plot WeightA Change over time
-#CData['WeightA'].plot()
-#plt.title('Changes in DM Index Weight')
-#plt.xlabel('Days')
-#plt.ylabel('Weight of Asset A (Developed Market Index)')
-#plt.show()
+CData['WeightA'].plot()
+plt.title('No Rebalancing')
+plt.xlabel('Days')
+plt.ylabel('Weight of Asset A (Developed Market Index)')
+plt.show()
 
 ####################################################################################################################
 # Calculate Cost Minimising Weights for every Time Period
@@ -179,7 +186,7 @@ for line1 in range(1,len(Data)):
         Cost_Min['CEC'][line2] = (math.exp(Cost_Min['Expected_Utility_Optimal'][line2]) - math.exp(Cost_Min['Expected_Utility_Current'][line2]))*initial_amount_invested
     
         # Calculate the Transaction Costs to be incurred if rebalancing is to take place
-        Cost_Min['TC'][line2] =  (40*math.fabs(Optimal_WeightA-(Cost_Min['WeightA'][line2])) + 60*math.fabs((1-Optimal_WeightA)-(1-(Cost_Min['WeightA'][line2]))))
+        Cost_Min['TC'][line2] =  (CA*math.fabs(Optimal_WeightA-(Cost_Min['WeightA'][line2])) + CB*math.fabs((1-Optimal_WeightA)-(1-(Cost_Min['WeightA'][line2]))))
         
         # Calculate Total Costs to be incurred if rebalancing is to take place
         Cost_Min['Costs'][line2] = Cost_Min['CEC'][line2] + Cost_Min['TC'][line2]
