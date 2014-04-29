@@ -1,5 +1,8 @@
-# 
+# Implementation of:
+#   Title: Optimal Rebalancing Strategy Using Dynamic Programming for Institutional Portfolios / MIT Working Paper
+#   Authors: Walter Sun, Ayres Fan, Li-Wei Che, Tom Schouwenaars, Marius A. Albota
 
+# INSTRUCTIONS: Keep the Data.csv file in the same directory and do NOT change the column names. Uncheck '#' to see the graphs if required. 
 
 # Import Required Libraries
 import pandas as pd
@@ -11,21 +14,20 @@ import time
 
 # Project Information
 print '############################################################################################'
-print 'Module: Dynamic Programming'
 print 'Project: Optimal Rebalancing Strategy Using Dynamic Programming for Institutional Portfolios'
-print 'Authors: Dimitrakopoulos Konstantinos Ntario, Mayer Nikolas, Surowka Magdalena'
 print '############################################################################################'
 print ' '
 
 # Start Timer to measure Total Run Time of Script
 t0 = time.clock()
+
 ####################################################################################################################
 # CALCULATE OPTIMAL PORTFOLIO WEIGHT - EFFICIENT FRONTIER MEAN-VARIANCE OPTIMIZATION
 
 # Create Pandas Dataframe and read in prices of 2 assets
 pd.set_option('display.line_width', 300)
 #Load csv with Websites on the dataframe
-Data = pd.read_csv('DataImportant.csv')
+Data = pd.read_csv('Data.csv')
 
 # Calculate Daily Returns for Assets A & B using Vectoring
 Data['Returns_A'] = Data['Close_A']/Data['Close_A'].shift(1)-1
@@ -75,15 +77,14 @@ for i in range(0,int(1 / detail)):
 print 'Optimal Portfolio Weight According to Efficient Frontier Using Mean-Variance Optimization: ' + str(Optimal_WeightA)
 
 # Plot Efficient Frontier using Mean Variance Optimization
-plt.plot(A['WeightA'] ,A['Variance'])
-plt.title('Efficient Frontier using Mean-Variance Optimization')
-plt.xlabel('Weight of Asset A (Developed Market Index)')
-plt.ylabel('Variance')
-plt.show()
-
+#plt.plot(A['WeightA'] ,A['Variance'])
+#plt.title('Efficient Frontier using Mean-Variance Optimization')
+#plt.xlabel('Weight of Asset A (Developed Market Index)')
+#plt.ylabel('Variance')
+#plt.show()
 
 ####################################################################################################################
-# Calculate Investment Parameters of Portfolio if Optimal Weight is selected in period 0 and then porfolio is left to drift according to market prices
+# NO REBALANCING - Calculate Investment Parameters of Portfolio if Optimal Weight is selected in period 0 and then weights are left to drift according to market prices
 
 # Copy the DataFrame with the read data
 CData = Data
@@ -125,15 +126,14 @@ print 'Cost of not rebalancing to Optimal Portfolio Weight: ' + str(np.abs(np.su
 print ' '
 
 # Plot WeightA Change over time
-CData['WeightA'].plot()
-plt.title('No Rebalancing')
-plt.xlabel('Days')
-plt.ylabel('Weight of Asset A (Developed Market Index)')
-plt.show()
+#CData['WeightA'].plot()
+#plt.title('No Rebalancing')
+#plt.xlabel('Days')
+#plt.ylabel('Weight of Asset A (Developed Market Index)')
+#plt.show()
 
 ####################################################################################################################
-# Calculate Cost Minimising Weights for every Time Period
-
+# DYNAMIC PROGRAMMIN REBALANCING
 
 # Determine Additional Parameters in the DataFrame
 Data['Min_Cost_Weight'] = Data['TC'] = Data['CEC'] = Data['Total_Costs'] = Data['Low_Bound'] = Data['High_Bound'] = Data['Rebalance'] = 0.0
@@ -272,4 +272,5 @@ print 'Total Costs of Rebalancing using Dynamic Programming ' + str(TC_DM)
 # Save output file to current directory
 Data.to_csv('Optimal.csv')
 
+# Print Time it Took to Run Code
 print 'Total Run Time: ' + str(time.clock() - t0,)
