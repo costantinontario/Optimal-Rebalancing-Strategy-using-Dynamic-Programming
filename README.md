@@ -1,5 +1,5 @@
 Optimal Rebalancing Strategy using Dynamic Programming
-------------------------------------------------------
+======================================================
 This project is a Python implementation of the following MIT Working Paper:
 'Optimal Rebalancing Strategy Using Dynamic Programming for Institutional Portfolios'
 
