@@ -33,4 +33,4 @@ Information
 	9. 'Min_Cost_Weight': 									Weight that minimises TC + CEC in every period
 	10. 'Low_Bound' & 'High_Bound':							Thresholds to use for Rebalancing Decision (intersection between TC and CEC)
 	11. 'Rebalance':										Decision to Rebalance (1 = Rebalance, 0 = Do Not Rebalance)
-	12. 'New_WeightA':										Weight after decision (subsequently also updates 'Investment_A' and 'Investment_B')
+	12. 'New_WeightA':										Weight after Dynamic Programming Decision (subsequently also updates 'Investment_A' and 'Investment_B')
